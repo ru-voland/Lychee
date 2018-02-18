@@ -8,7 +8,7 @@ final class Session {
 	 * Reads and returns information about the Lychee installation.
 	 * @return array Returns an array with the login status and configuration.
 	 */
-	public function init($public = true) {
+	public function init($mode = LYCHEE_MODE_GUEST) {
 
 		// Call plugins
 		Plugins::get()->activate(__METHOD__, 0, func_get_args());
@@ -25,23 +25,10 @@ final class Session {
 		unset($return['config']['identifier']);
 
 		// Check if login credentials exist and login if they don't
-		if ($this->noLogin()===true) {
-			$public = false;
-			$return['config']['login'] = false;
-		} else {
-			$return['config']['login'] = true;
-		}
+		$return['config']['login'] = !$this->noLogin();;
+		$return['status'] = $mode;
 
-		if ($public===false) {
-
-			// Logged in
-			$return['status'] = LYCHEE_STATUS_LOGGEDIN;
-
-		} else {
-
-			// Logged out
-			$return['status'] = LYCHEE_STATUS_LOGGEDOUT;
-
+		if ($mode != LYCHEE_MODE_ADMIN) {
 			// Unset unused vars
 			unset($return['config']['skipDuplicates']);
 			unset($return['config']['sortingAlbums']);
@@ -51,7 +38,6 @@ final class Session {
 			unset($return['config']['location']);
 			unset($return['config']['imagick']);
 			unset($return['config']['plugins']);
-
 		}
 
 		// Call plugins

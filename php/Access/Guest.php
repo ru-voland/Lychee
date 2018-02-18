@@ -45,7 +45,7 @@ final class Guest extends Access {
 	private static function getAlbumsAction() {
 
 		$albums = new Albums();
-		Response::json($albums->get(true));
+		Response::json($albums->get(LYCHEE_MODE_GUEST));
 
 	}
 
@@ -114,7 +114,7 @@ final class Guest extends Access {
 	private static function initAction() {
 
 		$session = new Session();
-		Response::json($session->init(true));
+		Response::json($session->init(LYCHEE_MODE_GUEST));
 
 	}
 

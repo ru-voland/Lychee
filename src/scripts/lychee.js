@@ -2,6 +2,11 @@
  * @description This module provides the basic functions of Lychee.
  */
 
+const MODE_NOCONFIG = 0
+const MODE_PUBLIC 	= 1
+const MODE_ADMIN	= 2
+const MODE_USER		= 3
+
 lychee = {
 
 	title           : document.title,
@@ -12,7 +17,7 @@ lychee = {
 	updateURL       : 'https://github.com/electerious/Lychee',
 	website         : 'http://lychee.electerious.com',
 
-	publicMode      : false,
+	mode			: MODE_PUBLIC,
 	viewMode        : false,
 
 	checkForUpdates : '1',
@@ -35,9 +40,19 @@ lychee.init = function() {
 		// Check status
 		// 0 = No configuration
 		// 1 = Logged out
-		// 2 = Logged in
+		// 2 = Admin user
+		// 3 = User mode
 
-		if (data.status===2) {
+		if (data.status===MODE_USER) {
+
+			// User mode
+
+			lychee.sortingPhotos   = data.config.sortingPhotos   || ''
+			lychee.sortingAlbums   = data.config.sortingAlbums   || ''
+			lychee.location        = data.config.location        || ''
+			lychee.checkForUpdates = data.config.checkForUpdates || '1'
+
+		} else if (data.status===MODE_ADMIN) {
 
 			// Logged in
 
@@ -50,19 +65,17 @@ lychee.init = function() {
 			// Show dialog when there is no username and password
 			if (data.config.login===false) settings.createLogin()
 
-		} else if (data.status===1) {
+		} else if (data.status===MODE_PUBLIC) {
 
 			// Logged out
 
 			lychee.checkForUpdates = data.config.checkForUpdates || '1'
 
-			lychee.setMode('public')
-
-		} else if (data.status===0) {
+		} else if (data.status===MODE_NOCONFIG) {
 
 			// No configuration
 
-			lychee.setMode('public')
+			lychee.setMode(MODE_PUBLIC)
 
 			header.dom().hide()
 			lychee.content.hide()
@@ -73,6 +86,7 @@ lychee.init = function() {
 
 		}
 
+		lychee.setMode(data.status)
 		$(window).bind('popstate', lychee.load)
 		lychee.load()
 
@@ -262,21 +276,20 @@ lychee.setMode = function(mode) {
 		.unbind([ 'command+backspace', 'ctrl+backspace' ])
 		.unbind([ 'command+a', 'ctrl+a' ])
 
-	if (mode==='public') {
+  lychee.mode = mode
+}
 
-		lychee.publicMode = true
 
-	} else if (mode==='view') {
+// Sets view mode (from album.js)
+lychee.setViewMode = function() {
 
-		Mousetrap.unbind([ 'esc', 'command+up' ])
+	lychee.setMode(MODE_PUBLIC)
+	Mousetrap.unbind([ 'esc', 'command+up' ])
 
-		$('#button_back, a#next, a#previous').remove()
-		$('.no_content').remove()
+	$('#button_back, a#next, a#previous').remove()
+	$('.no_content').remove()
 
-		lychee.publicMode = true
-		lychee.viewMode   = true
-
-	}
+	lychee.viewMode   = true
 
 }
 

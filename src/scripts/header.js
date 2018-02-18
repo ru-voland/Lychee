@@ -101,7 +101,7 @@ header.setTitle = function(title = 'Untitled') {
 
 header.setMode = function(mode) {
 
-	if (mode==='albums' && lychee.publicMode===true) mode = 'public'
+	if (mode==='albums' && (lychee.mode===MODE_PUBLIC || lychee.mode===MODE_USER)) mode = 'public'
 
 	switch (mode) {
 
@@ -136,7 +136,7 @@ header.setMode = function(mode) {
 			else                            $('#button_archive').show()
 
 			// Hide download button when not logged in and album not downloadable
-			if (lychee.publicMode===true && album.json.downloadable==='0') $('#button_archive').hide()
+			if (lychee.mode===MODE_ADMIN || album.json.downloadable==='0') $('#button_archive').hide()
 
 			if (albumID==='s' || albumID==='f' || albumID==='r') {
 				$('#button_info_album, #button_trash_album, #button_share_album').hide()
@@ -170,7 +170,7 @@ header.setEditable = function(editable) {
 	let $title = header.dom('.header__title')
 
 	// Hide editable icon when not logged in
-	if (lychee.publicMode===true) editable = false
+	if (lychee.mode===MODE_PUBLIC) editable = false
 
 	if (editable) $title.addClass('header__title--editable')
 	else          $title.removeClass('header__title--editable')

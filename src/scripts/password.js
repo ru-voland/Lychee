@@ -10,7 +10,7 @@ password = {
 
 password.get = function(albumID, callback) {
 
-	if (lychee.publicMode===false)                                  callback()
+	if (lychee.mode===MODE_ADMIN)                                  callback()
 	else if (album.json && album.json.password==='0')               callback()
 	else if (albums.json && albums.getByID(albumID).password==='0') callback()
 	else if (!albums.json && !album.json) {

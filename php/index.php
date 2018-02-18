@@ -15,6 +15,8 @@ use Lychee\Modules\Validator;
 use Lychee\Access\Installation;
 use Lychee\Access\Admin;
 use Lychee\Access\Guest;
+use Lychee\Access\User;
+
 
 require(__DIR__ . '/define.php');
 require(__DIR__ . '/autoload.php');
@@ -71,7 +73,16 @@ if (!empty($fn)) {
 		Admin::init($fn);
 		exit();
 
-	} else {
+	} else if (true) {
+
+		/**
+		 * User Access
+		 * Access to view all albums and photos with ability to add/edit/delete and so on (limited admin access).
+		 */
+		User::init($fn);
+		exit();
+	}
+	else {
 
 		/**
 		 * Guest Access

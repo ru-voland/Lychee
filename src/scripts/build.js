@@ -57,8 +57,9 @@ build.album = function(data) {
 	            </div>
 	        `
 
-	if (lychee.publicMode===false) {
+	if (lychee.mode===MODE_ADMIN) {
 
+		// TODO: adapt for users
 		html += lychee.html`
 		        <div class='badges'>
 		            <a class='badge $${ (data.star==='1'     ? 'badge--visible' : '') } icn-star'>${ build.iconic('star') }</a>
@@ -95,7 +96,9 @@ build.photo = function(data) {
 
 	html += `</div>`
 
-	if (lychee.publicMode===false) {
+	if (lychee.mode===MODE_ADMIN) {
+
+		// TODO: adapt for users
 
 		html += lychee.html`
 		        <div class='badges'>

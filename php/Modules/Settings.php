@@ -20,7 +20,7 @@ final class Settings {
 		// Add each to return
 		while ($setting = $settings->fetch_object()) $return[$setting->key] = $setting->value;
 
-		// Convert plugins to array
+ 		// Convert plugins to array
 		$return['plugins'] = explode(';', $return['plugins']);
 
 		self::$cache = $return;

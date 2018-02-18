@@ -4,9 +4,10 @@
 define('LYCHEE', substr(__DIR__, 0, -3));
 
 // Define status
-define('LYCHEE_STATUS_NOCONFIG', 0);
-define('LYCHEE_STATUS_LOGGEDOUT', 1);
-define('LYCHEE_STATUS_LOGGEDIN', 2);
+define('LYCHEE_MODE_NOCONFIG', 0);
+define('LYCHEE_MODE_GUEST', 1);
+define('LYCHEE_MODE_ADMIN', 2);
+define('LYCHEE_MODE_USER', 3);
 
 // Define dirs
 define('LYCHEE_DATA', LYCHEE . 'data/');

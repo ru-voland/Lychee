@@ -23,7 +23,7 @@ multiselect.bind = function() {
 
 multiselect.show = function(e) {
 
-	if (lychee.publicMode)                          return false
+	if (lychee.mode===MODE_PUBLIC)                  return false
 	if (!visible.albums() && !visible.album())      return false
 	if ($('.album:hover, .photo:hover').length!==0) return false
 	if (visible.search())                           return false
@@ -46,7 +46,7 @@ multiselect.show = function(e) {
 
 multiselect.selectAll = function() {
 
-	if (lychee.publicMode)                   return false
+	if (lychee.mode===MODE_PUBLIC)           return false
 	if (visible.search())                    return false
 	if (!visible.albums() && !visible.album) return false
 	if (visible.multiselect())               $('#multiselect').remove()

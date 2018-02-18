@@ -16,7 +16,7 @@ final class Albums {
 	/**
 	 * @return array|false Returns an array of albums or false on failure.
 	 */
-	public function get($public = true) {
+	public function get($mode = LYCHEE_MODE_GUEST) {
 
 		// Call plugins
 		Plugins::get()->activate(__METHOD__, 0, func_get_args());
@@ -29,11 +29,14 @@ final class Albums {
 		);
 
 		// Get SmartAlbums
-		if ($public===false) $return['smartalbums'] = $this->getSmartAlbums();
+		if ($mode===LYCHEE_MODE_ADMIN)
+			$return['smartalbums'] = $this->getSmartAlbums();
 
 		// Albums query
-		if ($public===false) $query = Database::prepare(Database::get(), 'SELECT id, title, public, sysstamp, password FROM ? ' . Settings::get()['sortingAlbums'], array(LYCHEE_TABLE_ALBUMS));
-		else                 $query = Database::prepare(Database::get(), 'SELECT id, title, public, sysstamp, password FROM ? WHERE public = 1 AND visible <> 0 ' . Settings::get()['sortingAlbums'], array(LYCHEE_TABLE_ALBUMS));
+		if ($mode===LYCHEE_MODE_ADMIN)
+			$query = Database::prepare(Database::get(), 'SELECT id, title, public, sysstamp, password FROM ? ' . Settings::get()['sortingAlbums'], array(LYCHEE_TABLE_ALBUMS));
+		else
+			$query = Database::prepare(Database::get(), 'SELECT id, title, public, sysstamp, password FROM ? WHERE public = 1 AND visible <> 0 ' . Settings::get()['sortingAlbums'], array(LYCHEE_TABLE_ALBUMS));
 
 		// Execute query
 		$albums = Database::execute(Database::get(), $query, __METHOD__, __LINE__);
@@ -47,8 +50,7 @@ final class Albums {
 			$album = Album::prepareData($album);
 
 			// Thumbs
-			if (($public===true&&$album['password']==='0')||
-				($public===false)) {
+			if ($mode===LYCHEE_MODE_ADMIN || $mode===LYCHEE_MODE_USER || $album['password']==='0') {
 
 					// Execute query
 					$query  = Database::prepare(Database::get(), "SELECT thumbUrl FROM ? WHERE album = '?' ORDER BY star DESC, " . substr(Settings::get()['sortingPhotos'], 9) . " LIMIT 3", array(LYCHEE_TABLE_PHOTOS, $album['id']));

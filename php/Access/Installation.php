@@ -33,7 +33,7 @@ final class Installation extends Access {
 	private static function initAction() {
 
 		$return = array(
-			'status' => LYCHEE_STATUS_NOCONFIG
+			'status' => LYCHEE_MODE_NOCONFIG
 		);
 
 		Response::json($return);

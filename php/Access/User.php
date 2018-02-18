@@ -11,7 +11,7 @@ use Lychee\Modules\Session;
 use Lychee\Modules\Settings;
 use Lychee\Modules\Validator;
 
-final class Admin extends Access {
+final class User extends Access {
 
 	public static function init($fn) {
 
@@ -22,10 +22,10 @@ final class Admin extends Access {
 
 			// Album functions
 			case 'Album::get':              self::getAlbumAction(); break;
-			case 'Album::add':              self::addAlbumAction(); break;
+//			case 'Album::add':              self::addAlbumAction(); break;
 			case 'Album::setTitle':         self::setAlbumTitleAction(); break;
 			case 'Album::setDescription':   self::setAlbumDescriptionAction(); break;
-			case 'Album::setPublic':        self::setAlbumPublicAction(); break;
+//			case 'Album::setPublic':        self::setAlbumPublicAction(); break;
 			case 'Album::delete':           self::deleteAlbumAction(); break;
 			case 'Album::merge':            self::mergeAlbumsAction(); break;
 
@@ -34,16 +34,16 @@ final class Admin extends Access {
 			case 'Photo::setTitle':         self::setPhotoTitleAction(); break;
 			case 'Photo::setDescription':   self::setPhotoDescriptionAction(); break;
 			case 'Photo::setStar':          self::setPhotoStarAction(); break;
-			case 'Photo::setPublic':        self::setPhotoPublicAction(); break;
+//			case 'Photo::setPublic':        self::setPhotoPublicAction(); break;
 			case 'Photo::setAlbum':         self::setPhotoAlbumAction(); break;
 			case 'Photo::setTags':          self::setPhotoTagsAction(); break;
 			case 'Photo::duplicate':        self::duplicatePhotoAction(); break;
 			case 'Photo::delete':           self::deletePhotoAction(); break;
 
 			// Add functions
-			case 'Photo::add':              self::uploadAction(); break;
-			case 'Import::url':             self::importUrlAction(); break;
-			case 'Import::server':          self::importServerAction(); break;
+//			case 'Photo::add':              self::uploadAction(); break;
+//			case 'Import::url':             self::importUrlAction(); break;
+//			case 'Import::server':          self::importServerAction(); break;
 
 			// Search functions
 			case 'search':                  self::searchAction(); break;
@@ -54,9 +54,9 @@ final class Admin extends Access {
 			case 'Session::logout':         self::logoutAction(); break;
 
 			// Settings functions
-			case 'Settings::setLogin':      self::setLoginAction(); break;
+//			case 'Settings::setLogin':      self::setLoginAction(); break;
 			case 'Settings::setSorting':    self::setSortingAction(); break;
-			case 'Settings::setDropboxKey': self::setDropboxKeyAction(); break;
+//			case 'Settings::setDropboxKey': self::setDropboxKeyAction(); break;
 
 			// $_GET functions
 			case 'Album::getArchive':       self::getAlbumArchiveAction(); break;
@@ -73,7 +73,7 @@ final class Admin extends Access {
 	private static function getAlbumsAction() {
 
 		$albums = new Albums();
-		Response::json($albums->get(LYCHEE_MODE_ADMIN));
+		Response::json($albums->get(LYCHEE_MODE_USER));
 
 	}
 
@@ -268,7 +268,7 @@ final class Admin extends Access {
 	private static function initAction() {
 
 		$session = new Session();
-		Response::json($session->init(LYCHEE_MODE_ADMIN));
+		Response::json($session->init(LYCHEE_MODE_USER));
 
 	}
 

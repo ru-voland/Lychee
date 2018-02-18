@@ -119,9 +119,10 @@ sidebar.createStructure.photo = function(data) {
 	let _public   = ''
 
 	// Enable editable when user logged in
-	if (lychee.publicMode===false) editable = true
+	if (lychee.mode===MODE_ADMIN || lychee.mode===MODE_USER) editable = true
 
 	// Set value for public
+	// TODO: check data
 	switch (data.public) {
 
 		case '0' : _public = 'No'
@@ -156,7 +157,7 @@ sidebar.createStructure.photo = function(data) {
 	}
 
 	// Only create tags section when user logged in
-	if (lychee.publicMode===false) {
+	if (lychee.mode===MODE_ADMIN || lychee.mode===MODE_USER) {
 
 		structure.tags = {
 			title : 'Tags',
@@ -227,7 +228,7 @@ sidebar.createStructure.album = function(data) {
 	let password     = ''
 
 	// Enable editable when user logged in
-	if (lychee.publicMode===false) editable = true
+	if (lychee.mode===MODE_ADMIN || lychee.mode===MODE_USER) editable = true
 
 	// Set value for public
 	switch (data.public) {

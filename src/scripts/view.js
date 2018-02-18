@@ -29,7 +29,7 @@ view.albums = {
 			let albumsData = ''
 
 			// Smart Albums
-			if (lychee.publicMode===false) {
+			if (lychee.mode===MODE_ADMIN) {
 
 				albums.parse(albums.json.smartalbums.unsorted)
 				albums.parse(albums.json.smartalbums.public)
@@ -49,7 +49,7 @@ view.albums = {
 				})
 
 				// Add divider
-				if (lychee.publicMode===false) albumsData = build.divider('Albums') + albumsData
+				if (lychee.mode===MODE_ADMIN) albumsData = build.divider('Albums') + albumsData
 
 			}
 

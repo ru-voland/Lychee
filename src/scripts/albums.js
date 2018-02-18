@@ -21,7 +21,7 @@ albums.load = function() {
 			let waitTime = 0
 
 			// Smart Albums
-			if (lychee.publicMode===false) albums._createSmartAlbums(data.smartalbums)
+			if (lychee.mode===MODE_ADMIN) albums._createSmartAlbums(data.smartalbums)
 
 			albums.json = data
 
@@ -55,7 +55,7 @@ albums.load = function() {
 
 albums.parse = function(album) {
 
-	if (album.password==='1' && lychee.publicMode===true) {
+	if (album.password==='1' && (lychee.mode===MODE_PUBLIC || lychee.mode===MODE_USER)) {
 		album.thumbs[0] = 'src/images/password.svg'
 		album.thumbs[1] = 'src/images/password.svg'
 		album.thumbs[2] = 'src/images/password.svg'
